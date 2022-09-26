@@ -1,11 +1,9 @@
 package com.example.lotrjava.service;
 
-import com.example.lotrjava.LotrCharacter;
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.repository.LotrCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,25 +24,25 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
        return (List<LotrCharacter>) lotrCharacterRepository.findAll();
     }
 
-    public LotrCharacter getLotrCharacter(Long id) {
-        Optional<LotrCharacter> lotrCharacter = lotrCharacterRepository.findById(id);
-        if (lotrCharacter.isPresent()) return lotrCharacter.get();
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find character.");
+    @Override
+    public Optional<LotrCharacter> getLotrCharacter(Long id) {
+        return Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
     }
-//
-//    public LotrCharacter create(LotrCharacter lotrCharacter) {
-//        return lotrCharacterRepository.save(lotrCharacter);
-//    }
-//
-//    public List<LotrCharacter> findByAlliance(String alliance) {
-//        return lotrCharacterRepository.findLotrCharactersByAlliance(alliance);
-//    }
-//
-//    public List<LotrCharacter> findByName(String name) {
-//        return lotrCharacterRepository.findLotrCharactersByNameIsLike(name);
-//    }
-//
-//    public Optional<LotrCharacter> findById(Long id) {
-//        return lotrCharacterRepository.findById(id);
-//    }
+
+    @Override
+    public LotrCharacter updateLotrCharacter(Long id, LotrCharacter lotrCharacter) {
+        Optional<LotrCharacter> existingCharacter = Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
+        LotrCharacter updatedLotrCharacter = existingCharacter.get();
+        updatedLotrCharacter.setAlliance(lotrCharacter.getAlliance());
+        updatedLotrCharacter.setName(lotrCharacter.getName());
+        updatedLotrCharacter.setRace(lotrCharacter.getRace());
+        lotrCharacterRepository.save(updatedLotrCharacter);
+        return updatedLotrCharacter;
+    }
+
+    @Override
+    public void deleteLotrCharacter(Long id) {
+        Optional<LotrCharacter> existingCharacter = Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
+        lotrCharacterRepository.delete(existingCharacter.get());
+    }
 }

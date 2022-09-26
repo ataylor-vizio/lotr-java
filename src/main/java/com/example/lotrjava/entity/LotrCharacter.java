@@ -1,4 +1,4 @@
-package com.example.lotrjava;
+package com.example.lotrjava.entity;
 
 import lombok.*;
 
