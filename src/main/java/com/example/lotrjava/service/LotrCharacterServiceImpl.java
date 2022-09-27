@@ -1,6 +1,8 @@
 package com.example.lotrjava.service;
 
+import com.example.lotrjava.entity.Alliance;
 import com.example.lotrjava.entity.LotrCharacter;
+import com.example.lotrjava.repository.AllianceRepository;
 import com.example.lotrjava.repository.LotrCharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
 
     @Autowired
     LotrCharacterRepository lotrCharacterRepository;
+    AllianceRepository allianceRepository;
 
     @Override
     public LotrCharacter createLotrCharacter(LotrCharacter lotrCharacter) {

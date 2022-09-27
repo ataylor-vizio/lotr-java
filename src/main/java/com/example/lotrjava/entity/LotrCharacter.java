@@ -25,7 +25,8 @@ public class LotrCharacter {
     @Column(name = "race", nullable = false)
     private String race;
 
-    @Column(name = "alliance", nullable = true)
-    private String alliance;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "alliance_id")
+    private Alliance alliance;
 }
 
