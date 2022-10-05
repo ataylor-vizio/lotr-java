@@ -18,15 +18,25 @@ public class LotrCharacter {
     private Long id;
 
     @NonNull
-    @Column(name = "name", nullable = false)
+    @Column(unique = true)
     private String name;
 
     @NonNull
     @Column(name = "race", nullable = false)
     private String race;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "alliance_id")
     private Alliance alliance;
+
+    @Override
+    public String toString() {
+        return "LotrCharacter{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", race='" + race + '\'' +
+                ", alliance=" + alliance +
+                '}';
+    }
 }
 

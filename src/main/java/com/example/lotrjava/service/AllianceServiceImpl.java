@@ -1,17 +1,19 @@
 package com.example.lotrjava.service;
 
 import com.example.lotrjava.entity.Alliance;
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.repository.AllianceRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class AllianceServiceImpl implements AllianceService {
 
-    @Autowired
     AllianceRepository allianceRepository;
 
     @Override
@@ -28,14 +30,16 @@ public class AllianceServiceImpl implements AllianceService {
     public Optional<Alliance> getAlliance(Long id) {
         return Optional.of(allianceRepository.findById(id).orElseThrow());
     }
-//
-//    @Override
-//    public Alliance updateAlliance(Long id, Alliance alliance) {
-//        return null;
-//    }
-//
-//    @Override
-//    public void deleteAlliance(Long id) {
 
-//}
+    @Override
+    public Alliance updateAlliance(Long id, Alliance alliance) {
+        Alliance existingAlliance = Optional.of(allianceRepository.findById(id).orElseThrow()).get();
+        existingAlliance.setAlliance(alliance.getAlliance());
+        return allianceRepository.save(existingAlliance);
+    }
+
+    @Override
+    public void deleteAlliance(Long id) {
+        allianceRepository.deleteById(id);
+    }
 }

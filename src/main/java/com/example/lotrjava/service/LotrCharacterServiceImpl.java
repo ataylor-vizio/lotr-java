@@ -4,22 +4,28 @@ import com.example.lotrjava.entity.Alliance;
 import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.repository.AllianceRepository;
 import com.example.lotrjava.repository.LotrCharacterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class LotrCharacterServiceImpl implements LotrCharacterService {
 
-    @Autowired
     LotrCharacterRepository lotrCharacterRepository;
     AllianceRepository allianceRepository;
 
     @Override
-    public LotrCharacter createLotrCharacter(LotrCharacter lotrCharacter) {
-        return lotrCharacterRepository.save(lotrCharacter);
+    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter, Integer allianceId) {
+        LotrCharacter createdCharacter = new LotrCharacter();
+        createdCharacter.setName(lotrCharacter.get("name"));
+        createdCharacter.setRace(lotrCharacter.get("race"));
+        Alliance alliance = allianceRepository.findById(Long.parseLong(lotrCharacter.get("alliance"))).orElseThrow();
+        createdCharacter.setAlliance(alliance);
+        return lotrCharacterRepository.save(createdCharacter);
     }
 
     @Override
@@ -45,7 +51,6 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
 
     @Override
     public void deleteLotrCharacter(Long id) {
-        Optional<LotrCharacter> existingCharacter = Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
-        lotrCharacterRepository.delete(existingCharacter.get());
+        lotrCharacterRepository.deleteById(id);
     }
 }

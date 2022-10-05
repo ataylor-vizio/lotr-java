@@ -12,6 +12,6 @@ public interface AllianceService {
     Alliance createAlliance(Alliance alliance);
     List<Alliance> getAlliances();
     Optional<Alliance> getAlliance(Long id);
-//    Alliance updateAlliance(Long id, Alliance alliance);
-//    void deleteAlliance(Long id);
+    Alliance updateAlliance(Long id, Alliance alliance);
+    void deleteAlliance(Long id);
 }
