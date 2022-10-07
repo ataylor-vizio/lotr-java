@@ -3,7 +3,6 @@ package com.example.lotrjava.controller;
 import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.service.LotrCharacterService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +34,7 @@ public class LotrCharacterController {
     @ResponseBody
     public ResponseEntity<LotrCharacter> createLotrCharacter(@RequestBody HashMap<String, String> lotrCharacterRequest) {
         try {
-            Integer allianceId = Integer.valueOf(lotrCharacterRequest.get("alliance"));
-            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(lotrCharacterRequest, allianceId), HttpStatus.CREATED);
+            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(lotrCharacterRequest), HttpStatus.CREATED);
         } catch (NoSuchElementException exc) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "The requested Alliance does not exist.", exc);

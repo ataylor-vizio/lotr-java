@@ -1,5 +1,6 @@
 package com.example.lotrjava.service;
 
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.entity.Race;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,8 @@ public interface RaceService {
 
     Race createRace(Race race);
     List<Race> getRaces();
-    Race getRace(Long id);
-    Race updateRace(Long id, Race race);
-    void deleteRace(Long id);
+    Race getRace(String race);
+    Race updateRace(String raceName, Race race);
+    List<LotrCharacter> getRaceMembers(String raceName);
+    void deleteRace(String raceName);
 }

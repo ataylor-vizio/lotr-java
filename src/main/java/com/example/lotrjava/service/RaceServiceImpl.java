@@ -1,5 +1,6 @@
 package com.example.lotrjava.service;
 
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.entity.Race;
 import com.example.lotrjava.repository.RaceRepository;
 import lombok.AllArgsConstructor;
@@ -24,17 +25,26 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public Race getRace(Long id) {
-        return raceRepository.findById(id).orElseThrow();
+    public Race getRace(String raceName) {
+        return raceRepository.findRaceByRace(raceName).orElseThrow();
     }
 
     @Override
-    public Race updateRace(Long id, Race race) {
-        return null;
+    public Race updateRace(String raceName, Race race) {
+        Race existingRace = raceRepository.findRaceByRace(raceName).orElseThrow();
+        existingRace.setRace(raceName);
+        existingRace.setDescription(race.getDescription());
+        existingRace.setLotrCharacterList(race.getLotrCharacterList());
+        return raceRepository.save(existingRace);
     }
 
     @Override
-    public void deleteRace(Long id) {
-        raceRepository.deleteById(id);
+    public List<LotrCharacter> getRaceMembers(String raceName) {
+        return raceRepository.findRaceByRace(raceName).orElseThrow().getLotrCharacterList();
+    }
+
+    @Override
+    public void deleteRace(String raceName) {
+        raceRepository.deleteByRace(raceName);
     }
 }

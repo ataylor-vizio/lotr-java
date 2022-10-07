@@ -2,8 +2,10 @@ package com.example.lotrjava.service;
 
 import com.example.lotrjava.entity.Alliance;
 import com.example.lotrjava.entity.LotrCharacter;
+import com.example.lotrjava.entity.Race;
 import com.example.lotrjava.repository.AllianceRepository;
 import com.example.lotrjava.repository.LotrCharacterRepository;
+import com.example.lotrjava.repository.RaceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +18,16 @@ import java.util.Optional;
 public class LotrCharacterServiceImpl implements LotrCharacterService {
 
     LotrCharacterRepository lotrCharacterRepository;
-    AllianceRepository allianceRepository;
+    AllianceRepository allianceService;
+    RaceRepository raceRepository;
 
     @Override
-    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter, Integer allianceId) {
+    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter) {
         LotrCharacter createdCharacter = new LotrCharacter();
         createdCharacter.setName(lotrCharacter.get("name"));
-        createdCharacter.setRace(lotrCharacter.get("race"));
-        Alliance alliance = allianceRepository.findById(Long.parseLong(lotrCharacter.get("alliance"))).orElseThrow();
+        Race race = raceRepository.findRaceByRace(lotrCharacter.get("race")).orElseThrow();
+        createdCharacter.setRace(race);
+        Alliance alliance = allianceService.findByAlliance_nameIs(lotrCharacter.get("alliance")).orElseThrow();
         createdCharacter.setAlliance(alliance);
         return lotrCharacterRepository.save(createdCharacter);
     }

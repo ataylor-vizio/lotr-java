@@ -5,7 +5,6 @@ import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.repository.AllianceRepository;
 import com.example.lotrjava.service.AllianceService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

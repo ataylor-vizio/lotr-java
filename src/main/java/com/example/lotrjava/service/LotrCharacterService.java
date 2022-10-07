@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public interface LotrCharacterService {
-    LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter, Integer allianceId);
+    LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter);
     List<LotrCharacter> getLotrCharacters();
     Optional<LotrCharacter> getLotrCharacter(Long id);
     LotrCharacter updateLotrCharacter(Long id, LotrCharacter lotrCharacter);
