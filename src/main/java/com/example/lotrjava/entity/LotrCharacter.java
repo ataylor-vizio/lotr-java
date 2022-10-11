@@ -1,10 +1,11 @@
 package com.example.lotrjava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.LinkedHashMap;
 
 @Getter
 @Setter
@@ -28,10 +29,18 @@ public class LotrCharacter {
     @JoinColumn(name = "alliance", referencedColumnName = "alliance_name")
     private Alliance alliance;
 
-    @JsonIgnoreProperties
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "race", referencedColumnName = "race_name")
     private Race race;
 
+    public LinkedHashMap<String, String> nestedCharacterRepr() {
+        LinkedHashMap<String, String> characterInfo = new LinkedHashMap<>();
+        characterInfo.put("id", id.toString());
+        characterInfo.put("name", name);
+        characterInfo.put("race", race.getRaceName());
+        characterInfo.put("alliance", alliance.getAllianceName());
+        return characterInfo;
+    }
 }
 

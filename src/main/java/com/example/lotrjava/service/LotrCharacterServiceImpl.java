@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -22,14 +21,10 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
     RaceRepository raceRepository;
 
     @Override
-    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter) {
+    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacterRequest) {
         LotrCharacter createdCharacter = new LotrCharacter();
-        createdCharacter.setName(lotrCharacter.get("name"));
-        Race race = raceRepository.findRaceByRaceName(lotrCharacter.get("race")).orElseThrow();
-        createdCharacter.setRace(race);
-        Alliance alliance = allianceRepository.findByAllianceName(lotrCharacter.get("alliance")).orElseThrow();
-        createdCharacter.setAlliance(alliance);
-        return lotrCharacterRepository.save(createdCharacter);
+        setCharacterInfo(createdCharacter, lotrCharacterRequest);
+        return createdCharacter;
     }
 
     @Override
@@ -38,23 +33,29 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
     }
 
     @Override
-    public Optional<LotrCharacter> getLotrCharacter(Long id) {
-        return Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
+    public LotrCharacter getLotrCharacter(Long id) {
+        return lotrCharacterRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public LotrCharacter updateLotrCharacter(Long id, LotrCharacter lotrCharacter) {
-        Optional<LotrCharacter> existingCharacter = Optional.of(lotrCharacterRepository.findById(id).orElseThrow());
-        LotrCharacter updatedLotrCharacter = existingCharacter.get();
-        updatedLotrCharacter.setAlliance(lotrCharacter.getAlliance());
-        updatedLotrCharacter.setName(lotrCharacter.getName());
-        updatedLotrCharacter.setRace(lotrCharacter.getRace());
-        lotrCharacterRepository.save(updatedLotrCharacter);
-        return updatedLotrCharacter;
+    public LotrCharacter updateLotrCharacter(Long id, HashMap<String, String> lotrCharacterRequest) {
+        LotrCharacter foundCharacter = lotrCharacterRepository.findById(id).orElseThrow();
+        setCharacterInfo(foundCharacter, lotrCharacterRequest);
+        return foundCharacter;
     }
 
     @Override
     public void deleteLotrCharacter(Long id) {
         lotrCharacterRepository.deleteById(id);
     }
+
+    public void setCharacterInfo(LotrCharacter newOrChangedCharacter, HashMap<String, String> lotrCharacterRequest) {
+        newOrChangedCharacter.setName(lotrCharacterRequest.get("name"));
+        Race race = raceRepository.findRaceByRaceName(lotrCharacterRequest.get("race")).orElseThrow();
+        newOrChangedCharacter.setRace(race);
+        Alliance alliance = allianceRepository.findByAllianceName(lotrCharacterRequest.get("alliance")).orElseThrow();
+        newOrChangedCharacter.setAlliance(alliance);
+        lotrCharacterRepository.save(newOrChangedCharacter);
+    }
+
 }

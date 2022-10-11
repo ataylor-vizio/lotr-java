@@ -3,14 +3,13 @@ package com.example.lotrjava.service;
 import com.example.lotrjava.entity.Alliance;
 import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.repository.AllianceRepository;
+
 import lombok.AllArgsConstructor;
-import org.apache.logging.log4j.util.StringMap;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -34,17 +33,14 @@ public class AllianceServiceImpl implements AllianceService {
     }
 
     @Override
-    public Alliance findByAlliance(String allianceName) {
-        return allianceRepository.findByAllianceName(allianceName).orElseThrow();
-    }
-
-    @Override
-    public List<LotrCharacter> getAllianceMembers(String allianceName) {
+    public List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName) {
         List<LotrCharacter> members = allianceRepository.findByAllianceName(allianceName).orElseThrow().getLotrCharacters();
-        Map<String, String> map = new HashMap<>()
-                for(LotrCharacter lotrCharacter in members) {
-                    if
-        }//TODO figure out how to not include whole race info in race response json
+        List<LinkedHashMap<String, String>> allianceMemberInfo = new ArrayList<>();
+        for (LotrCharacter lotrCharacter : members)
+        {
+            allianceMemberInfo.add(lotrCharacter.nestedCharacterRepr());
+        }
+        return allianceMemberInfo;
     }
 
     @Override
@@ -56,6 +52,6 @@ public class AllianceServiceImpl implements AllianceService {
 
     @Override
     public void deleteAlliance(String allianceName) {
-        allianceRepository.deleteAllianceByAllianceName(allianceName);
+       allianceRepository.delete(allianceRepository.findByAllianceName(allianceName).orElseThrow());
     }
 }

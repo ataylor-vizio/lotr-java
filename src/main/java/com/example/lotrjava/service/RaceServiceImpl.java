@@ -6,6 +6,8 @@ import com.example.lotrjava.repository.RaceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -39,12 +41,17 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public List<LotrCharacter> getRaceMembers(String raceName) {
-        return raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
+    public List<LinkedHashMap<String, String>> getRaceMembers(String raceName) {
+        List<LotrCharacter> raceCharacters = raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
+        List<LinkedHashMap<String, String>> raceMemberList = new ArrayList<>();
+        for (LotrCharacter lotrCharacter : raceCharacters) {
+            raceMemberList.add(lotrCharacter.nestedCharacterRepr());
+        }
+        return raceMemberList;
     }
 
     @Override
     public void deleteRace(String raceName) {
-        raceRepository.deleteByRaceName(raceName);
+        raceRepository.delete(raceRepository.findRaceByRaceName(raceName).orElseThrow());
     }
 }

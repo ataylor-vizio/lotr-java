@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -45,7 +47,7 @@ public class RaceController {
     }
 
     @GetMapping("/{raceName}/members")
-    public ResponseEntity<List<LotrCharacter>> showRaceMembers(@PathVariable String raceName) {
+    public ResponseEntity<List<LinkedHashMap<String, String>>> showRaceMembers(@PathVariable String raceName) {
         return new ResponseEntity<>(raceService.getRaceMembers(raceName), HttpStatus.OK);
     }
 }

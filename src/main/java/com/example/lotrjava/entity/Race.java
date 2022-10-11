@@ -1,10 +1,13 @@
 package com.example.lotrjava.entity;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Getter
@@ -31,4 +34,11 @@ public class Race implements Serializable {
     @JsonIgnore
     @OneToMany(mappedBy = "race", cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacterList;
+
+    public LinkedHashMap<String, String> nestedRaceRepr() {
+        LinkedHashMap<String, String> raceInfo = new LinkedHashMap<String, String>();
+        raceInfo.put("id", id.toString());
+        raceInfo.put("name", raceName);
+        return raceInfo;
+    }
 }

@@ -8,10 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @AllArgsConstructor
 @RequestMapping("/lotrcharacters")
@@ -26,15 +23,16 @@ public class LotrCharacterController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<LotrCharacter>> getLotrCharacter(@PathVariable Long id) {
-        return new ResponseEntity<>(lotrCharacterService.getLotrCharacter(id), HttpStatus.OK);
+    public ResponseEntity<LinkedHashMap<String, String>> getLotrCharacter(@PathVariable Long id) {
+        LotrCharacter foundCharacter = lotrCharacterService.getLotrCharacter(id);
+        return new ResponseEntity<>(foundCharacter.nestedCharacterRepr(), HttpStatus.OK);
     }
 
     @PostMapping
     @ResponseBody
-    public ResponseEntity<LotrCharacter> createLotrCharacter(@RequestBody HashMap<String, String> lotrCharacterRequest) {
+    public ResponseEntity<LinkedHashMap<String, String>> createLotrCharacter(@RequestBody HashMap<String, String> lotrCharacterRequest) {
         try {
-            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(lotrCharacterRequest), HttpStatus.CREATED);
+            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(lotrCharacterRequest).nestedCharacterRepr(), HttpStatus.CREATED);
         } catch (NoSuchElementException exc) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, "The requested Alliance does not exist.", exc);
@@ -42,9 +40,10 @@ public class LotrCharacterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<LotrCharacter> updateLotrCharacter(@PathVariable Long id, @RequestBody LotrCharacter lotrCharacter) {
+    public ResponseEntity<LinkedHashMap<String, String>> updateLotrCharacter(@PathVariable Long id, @RequestBody HashMap<String, String> lotrCharacterRequest) {
         try {
-            return new ResponseEntity<>(lotrCharacterService.updateLotrCharacter(id, lotrCharacter), HttpStatus.OK);
+            LotrCharacter updatedCharacter = lotrCharacterService.updateLotrCharacter(id, lotrCharacterRequest);
+            return new ResponseEntity<>(updatedCharacter.nestedCharacterRepr(), HttpStatus.OK);
         } catch (NoSuchElementException exc) {
             throw new ResponseStatusException(
                     HttpStatus.NOT_FOUND, "requested character does not exist");

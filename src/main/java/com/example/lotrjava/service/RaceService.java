@@ -1,9 +1,11 @@
 package com.example.lotrjava.service;
 
-import com.example.lotrjava.entity.LotrCharacter;
+
 import com.example.lotrjava.entity.Race;
 import org.springframework.stereotype.Service;
 
+
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -13,6 +15,6 @@ public interface RaceService {
     List<Race> getRaces();
     Race getRace(String race);
     Race updateRace(String raceName, Race race);
-    List<LotrCharacter> getRaceMembers(String raceName);
+    List<LinkedHashMap<String, String>> getRaceMembers(String raceName);
     void deleteRace(String raceName);
 }

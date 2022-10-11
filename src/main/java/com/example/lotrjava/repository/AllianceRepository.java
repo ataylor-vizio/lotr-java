@@ -12,5 +12,4 @@ import java.util.Optional;
 public interface AllianceRepository extends CrudRepository<Alliance, Long> {
 
     Optional<Alliance> findByAllianceName (String allianceName);
-    Void deleteAllianceByAllianceName(String allianceName);
 }
