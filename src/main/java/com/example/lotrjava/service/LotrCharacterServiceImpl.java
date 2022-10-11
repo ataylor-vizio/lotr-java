@@ -18,16 +18,16 @@ import java.util.Optional;
 public class LotrCharacterServiceImpl implements LotrCharacterService {
 
     LotrCharacterRepository lotrCharacterRepository;
-    AllianceRepository allianceService;
+    AllianceRepository allianceRepository;
     RaceRepository raceRepository;
 
     @Override
     public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacter) {
         LotrCharacter createdCharacter = new LotrCharacter();
         createdCharacter.setName(lotrCharacter.get("name"));
-        Race race = raceRepository.findRaceByRace(lotrCharacter.get("race")).orElseThrow();
+        Race race = raceRepository.findRaceByRaceName(lotrCharacter.get("race")).orElseThrow();
         createdCharacter.setRace(race);
-        Alliance alliance = allianceService.findByAlliance_nameIs(lotrCharacter.get("alliance")).orElseThrow();
+        Alliance alliance = allianceRepository.findByAllianceName(lotrCharacter.get("alliance")).orElseThrow();
         createdCharacter.setAlliance(alliance);
         return lotrCharacterRepository.save(createdCharacter);
     }

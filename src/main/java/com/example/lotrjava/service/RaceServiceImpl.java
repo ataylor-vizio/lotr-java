@@ -26,13 +26,13 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public Race getRace(String raceName) {
-        return raceRepository.findRaceByRace(raceName).orElseThrow();
+        return raceRepository.findRaceByRaceName(raceName).orElseThrow();
     }
 
     @Override
     public Race updateRace(String raceName, Race race) {
-        Race existingRace = raceRepository.findRaceByRace(raceName).orElseThrow();
-        existingRace.setRace(raceName);
+        Race existingRace = raceRepository.findRaceByRaceName(raceName).orElseThrow();
+        existingRace.setRaceName(raceName);
         existingRace.setDescription(race.getDescription());
         existingRace.setLotrCharacterList(race.getLotrCharacterList());
         return raceRepository.save(existingRace);
@@ -40,11 +40,11 @@ public class RaceServiceImpl implements RaceService {
 
     @Override
     public List<LotrCharacter> getRaceMembers(String raceName) {
-        return raceRepository.findRaceByRace(raceName).orElseThrow().getLotrCharacterList();
+        return raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
     }
 
     @Override
     public void deleteRace(String raceName) {
-        raceRepository.deleteByRace(raceName);
+        raceRepository.deleteByRaceName(raceName);
     }
 }

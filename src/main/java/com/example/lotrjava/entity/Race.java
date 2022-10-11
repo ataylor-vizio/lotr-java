@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "races")
-public class Race {
+public class Race implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,11 +21,11 @@ public class Race {
     private Long id;
 
     @NonNull
-    @Column(name = "race", columnDefinition = "VARCHAR(64)", nullable = false)
-    private String race;
+    @Column(name = "race_name", columnDefinition = "VARCHAR(64)", nullable = false)
+    private String raceName;
 
     @NonNull
-    @Column(name = "description", nullable = false)
+    @Column(name = "description", columnDefinition = "VARCHAR(800)", nullable = false)
     private String description;
 
     @JsonIgnore

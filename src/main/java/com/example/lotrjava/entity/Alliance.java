@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
@@ -12,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "alliances")
-public class Alliance {
+public class Alliance implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -23,7 +24,7 @@ public class Alliance {
 //
     @NonNull
     @Column(name = "alliance_name", nullable = false, unique = true)
-    private String alliance;
+    private String allianceName;
 
     @OneToMany(mappedBy = "alliance", cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacters;

@@ -8,6 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface RaceRepository extends CrudRepository<Race, Long> {
-    Optional<Race> findRaceByRace(String raceName);
-    void deleteByRace(String raceName);
+    Optional<Race> findRaceByRaceName(String raceName);
+    void deleteByRaceName(String raceName);
 }

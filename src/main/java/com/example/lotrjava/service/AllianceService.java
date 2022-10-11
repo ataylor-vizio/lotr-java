@@ -1,19 +1,19 @@
 package com.example.lotrjava.service;
 
 import com.example.lotrjava.entity.Alliance;
+import com.example.lotrjava.entity.LotrCharacter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface AllianceService {
 
     Alliance createAlliance(Alliance alliance);
     List<Alliance> getAlliances();
-    Optional<Alliance> getAlliance(Long id);
-    Alliance findByAllianceName(String alliance);
-    Alliance updateAlliance(Long id, Alliance alliance);
-    void deleteAlliance(Long id);
-
+    Alliance getAlliance(String allianceName);
+    Alliance findByAlliance(String allianceName);
+    Alliance updateAlliance(String allianceName, Alliance alliance);
+    List<LotrCharacter> getAllianceMembers(String allianceName);
+    void deleteAlliance(String allianceName);
 }

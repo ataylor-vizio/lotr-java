@@ -1,6 +1,7 @@
 package com.example.lotrjava.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,28 +22,16 @@ public class LotrCharacter {
     @NonNull
     @Column(name = "char_name", unique = true)
     private String name;
-//
-//    @NonNull
-//    @Column(name = "race", nullable = false)
-//    private String race;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "alliance_id")
+    @JoinColumn(name = "alliance", referencedColumnName = "alliance_name")
     private Alliance alliance;
 
+    @JsonIgnoreProperties
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "race_id", referencedColumnName = "id")
+    @JoinColumn(name = "race", referencedColumnName = "race_name")
     private Race race;
 
-    @Override
-    public String toString() {
-        return "LotrCharacter{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", race='" + race + '\'' +
-                ", alliance_name=" + alliance +
-                '}';
-    }
 }
 
