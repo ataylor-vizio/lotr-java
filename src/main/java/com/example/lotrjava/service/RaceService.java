@@ -15,6 +15,6 @@ public interface RaceService {
     List<Race> getRaces();
     Race getRace(String race);
     Race updateRace(String raceName, Race race);
-    List<LinkedHashMap<String, String>> getRaceMembers(String raceName);
+//    List<LinkedHashMap<String, String>> getRaceMembers(String raceName);
     void deleteRace(String raceName);
 }

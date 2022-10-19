@@ -1,9 +1,6 @@
 package com.example.lotrjava.entity;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,20 +16,20 @@ import java.util.List;
 @Table(name = "alliances")
 public class Alliance implements Serializable {
 
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NonNull
     @Column(name = "alliance_name", nullable = false, unique = true)
     private String allianceName;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "alliance", cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacters;
 
-    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "alliance_races",
             joinColumns = {@JoinColumn(name = "alliance_id")},

@@ -13,6 +13,6 @@ public interface AllianceService {
     List<Alliance> getAlliances();
     Alliance getAlliance(String allianceName);
     Alliance updateAlliance(String allianceName, Alliance alliance);
-    List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName);
+//    List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName);
     void deleteAlliance(String allianceName);
 }

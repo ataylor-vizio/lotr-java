@@ -1,11 +1,11 @@
 package com.example.lotrjava.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.LinkedHashMap;
+import java.io.Serializable;
 
 @Getter
 @Setter
@@ -13,8 +13,9 @@ import java.util.LinkedHashMap;
 @NoArgsConstructor
 @Entity
 @Table(name = "lotr_characters")
-public class LotrCharacter {
+public class LotrCharacter implements Serializable {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,23 +25,23 @@ public class LotrCharacter {
     @Column(name = "char_name", unique = true)
     private String name;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "alliance", referencedColumnName = "alliance_name")
     private Alliance alliance;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
+    @NonNull
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "race", referencedColumnName = "race_name")
     private Race race;
-
-    public LinkedHashMap<String, String> nestedCharacterRepr() {
-        LinkedHashMap<String, String> characterInfo = new LinkedHashMap<>();
-        characterInfo.put("id", id.toString());
-        characterInfo.put("name", name);
-        characterInfo.put("race", race.getRaceName());
-        characterInfo.put("alliance", alliance.getAllianceName());
-        return characterInfo;
-    }
+//
+//    public LinkedHashMap<String, String> nestedCharacterRepr() {
+//        LinkedHashMap<String, String> characterInfo = new LinkedHashMap<>();
+//        characterInfo.put("id", id.toString());
+//        characterInfo.put("name", name);
+//        characterInfo.put("race", race.getRaceName());
+//        characterInfo.put("alliance", alliance.getAllianceName());
+//        return characterInfo;
+//    }
 }
 

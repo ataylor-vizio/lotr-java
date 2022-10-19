@@ -32,16 +32,16 @@ public class AllianceServiceImpl implements AllianceService {
         return allianceRepository.findByAllianceName(allianceName).orElseThrow();
     }
 
-    @Override
-    public List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName) {
-        List<LotrCharacter> members = allianceRepository.findByAllianceName(allianceName).orElseThrow().getLotrCharacters();
-        List<LinkedHashMap<String, String>> allianceMemberInfo = new ArrayList<>();
-        for (LotrCharacter lotrCharacter : members)
-        {
-            allianceMemberInfo.add(lotrCharacter.nestedCharacterRepr());
-        }
-        return allianceMemberInfo;
-    }
+//    @Override
+//    public List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName) {
+//        List<LotrCharacter> members = allianceRepository.findByAllianceName(allianceName).orElseThrow().getLotrCharacters();
+//        List<LinkedHashMap<String, String>> allianceMemberInfo = new ArrayList<>();
+//        for (LotrCharacter lotrCharacter : members)
+//        {
+//            allianceMemberInfo.add(lotrCharacter.nestedCharacterRepr());
+//        }
+//        return allianceMemberInfo;
+//    }
 
     @Override
     public Alliance updateAlliance(String allianceName, Alliance alliance) {

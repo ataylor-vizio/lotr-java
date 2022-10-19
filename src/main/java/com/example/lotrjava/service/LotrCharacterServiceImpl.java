@@ -21,10 +21,8 @@ public class LotrCharacterServiceImpl implements LotrCharacterService {
     RaceRepository raceRepository;
 
     @Override
-    public LotrCharacter createLotrCharacter(HashMap<String, String> lotrCharacterRequest) {
-        LotrCharacter createdCharacter = new LotrCharacter();
-        setCharacterInfo(createdCharacter, lotrCharacterRequest);
-        return createdCharacter;
+    public LotrCharacter createLotrCharacter(LotrCharacter lotrCharacterRequest) {
+       return lotrCharacterRepository.save(lotrCharacterRequest);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.lotrjava.entity;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -18,13 +17,15 @@ import java.util.List;
 @Table(name = "races")
 public class Race implements Serializable {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+
     @NonNull
-    @Column(name = "race_name", columnDefinition = "VARCHAR(64)", nullable = false)
+    @Column(name = "race_name", columnDefinition = "VARCHAR(64)", nullable = false, unique = true)
     private String raceName;
 
     @NonNull

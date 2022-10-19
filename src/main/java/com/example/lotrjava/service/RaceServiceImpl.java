@@ -40,15 +40,15 @@ public class RaceServiceImpl implements RaceService {
         return raceRepository.save(existingRace);
     }
 
-    @Override
-    public List<LinkedHashMap<String, String>> getRaceMembers(String raceName) {
-        List<LotrCharacter> raceCharacters = raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
-        List<LinkedHashMap<String, String>> raceMemberList = new ArrayList<>();
-        for (LotrCharacter lotrCharacter : raceCharacters) {
-            raceMemberList.add(lotrCharacter.nestedCharacterRepr());
-        }
-        return raceMemberList;
-    }
+//    @Override
+//    public List<LinkedHashMap<String, String>> getRaceMembers(String raceName) {
+//        List<LotrCharacter> raceCharacters = raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
+//        List<LinkedHashMap<String, String>> raceMemberList = new ArrayList<>();
+//        for (LotrCharacter lotrCharacter : raceCharacters) {
+//            raceMemberList.add(lotrCharacter.nestedCharacterRepr());
+//        }
+//        return raceMemberList;
+//    }
 
     @Override
     public void deleteRace(String raceName) {
