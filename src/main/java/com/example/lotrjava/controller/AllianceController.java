@@ -34,32 +34,32 @@ public class AllianceController {
         return new ResponseEntity<>(allianceService.getAlliances(), HttpStatus.OK);
     }
 
-    /** Finds and returns a single alliance by allianceName
+    /** Finds and returns a single alliance by id
      *
-     * @param allianceName name of the alliance to be found
+     * @param id name of the alliance to be found
      * @return the alliance model instance found
      */
-    @Operation(summary = "Finds and returns single alliance by allianceName, throws error if alliance not found.",
-            description = "allianceName should be declared as a path variable.",
+    @Operation(summary = "Finds and returns single alliance by id, throws error if alliance not found.",
+            description = "id should be declared as a path variable.",
             responses = {
                     @ApiResponse(content = @Content(mediaType= "application/json")),
             })
-    @GetMapping("/{allianceName}")
-    public ResponseEntity<Alliance> getAlliance(@PathVariable String allianceName) {
-           return new ResponseEntity<>(allianceService.getAlliance(allianceName), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Alliance> getAlliance(@PathVariable Long id) {
+           return new ResponseEntity<>(allianceService.getAlliance(id), HttpStatus.OK);
     }
 
     /** Creates a new alliance with given alliance name
      *
-     * @param alliance Name of the alliance to be created - ex: "allianceName": "good".
+     * @param alliance Name of the alliance to be created - ex: "id": "good".
      * @return the alliance model instance created
      */
     @Operation(summary = "Creates new alliance",
-            description = "JSON should be submitted with only the allianceName field and corresponding value",
+            description = "JSON should be submitted with only the id field and corresponding value",
             responses = {
                     @ApiResponse(content = @Content(mediaType= "application/json")),
             })
-    @Parameter(name = "allianceName")
+    @Parameter(name = "id")
     @PostMapping
     @ResponseBody
     public ResponseEntity<Alliance> createAlliance(@RequestBody Alliance alliance) {
@@ -68,50 +68,50 @@ public class AllianceController {
 
     /** Edits existing alliance if alliance is found
      *
-     * @param allianceName  path variable string of allianceName
+     * @param id  path variable string of id
      * @param alliance full alliance object in json object to be edited
      * @return the alliance model instance edited
      */
     @Operation(summary = "Edits existing alliance",
-            description = "JSON should be submitted with only the allianceName field and corresponding value",
+            description = "JSON should be submitted with only the id field and corresponding value",
             responses = {
                     @ApiResponse(content = @Content(mediaType= "application/json")),
             })
-    @Parameter(name = "allianceName")
+    @Parameter(name = "id")
     @Parameter(name = "alliance")
-    @PutMapping("/{allianceName}")
-    public ResponseEntity<Alliance> updateAlliance(@PathVariable String allianceName, @RequestBody Alliance alliance) {
-        return new ResponseEntity<>(allianceService.updateAlliance(allianceName, alliance), HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<Alliance> updateAlliance(@PathVariable Long id, @RequestBody Alliance alliance) {
+        return new ResponseEntity<>(allianceService.updateAlliance(id, alliance), HttpStatus.OK);
     }
 
     /** Deletes alliance if alliance is found
      *
-     * @param allianceName name of alliance to be deleted
+     * @param id name of alliance to be deleted
      * @return No Content
      */
     @Operation(summary = "Deletes an alliance if found, else throws an error",
-            description = "No json body needed - path variable of allianceName should be provided.",
+            description = "No json body needed - path variable of id should be provided.",
             responses = {
                     @ApiResponse(responseCode = "204",
                     description = "No Content"),
             })
-    @Parameter(name = "allianceName")
-    @DeleteMapping("/{allianceName}")
-    public ResponseEntity<HttpStatus> deleteAlliance(@PathVariable String allianceName) {
-        allianceService.deleteAlliance(allianceName);
+    @Parameter(name = "id")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteAlliance(@PathVariable Long id) {
+        allianceService.deleteAlliance(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 //    /** Retrieves all members of an alliance
 //     *
-//     * @param allianceName name of alliance to which returned members belong to
+//     * @param id name of alliance to which returned members belong to
 //     * @return allianceMembers
 //     */
 //    @Operation(summary = "Find all characters associated with the alliance",
-//            description = "Path variable of allianceName should be provided.")
-//    @Parameter(name = "allianceName")
-//    @GetMapping("/{allianceName}/members")
-//    public ResponseEntity<List<LinkedHashMap<String, String>>> showAllianceMembers(@PathVariable String allianceName) {
-//        return new ResponseEntity<>(allianceService.getAllianceMembers(allianceName), HttpStatus.OK);
+//            description = "Path variable of id should be provided.")
+//    @Parameter(name = "id")
+//    @GetMapping("/{id}/members")
+//    public ResponseEntity<List<LinkedHashMap<String, String>>> showAllianceMembers(@PathVariable Long id) {
+//        return new ResponseEntity<>(allianceService.getAllianceMembers(id), HttpStatus.OK);
 //    }
 }

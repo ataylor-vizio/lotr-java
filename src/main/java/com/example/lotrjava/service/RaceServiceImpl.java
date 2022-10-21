@@ -1,13 +1,11 @@
 package com.example.lotrjava.service;
 
-import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.entity.Race;
 import com.example.lotrjava.repository.RaceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+
 import java.util.List;
 
 @AllArgsConstructor
@@ -27,14 +25,14 @@ public class RaceServiceImpl implements RaceService {
     }
 
     @Override
-    public Race getRace(String raceName) {
-        return raceRepository.findRaceByRaceName(raceName).orElseThrow();
+    public Race getRace(Long id) {
+        return raceRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public Race updateRace(String raceName, Race race) {
-        Race existingRace = raceRepository.findRaceByRaceName(raceName).orElseThrow();
-        existingRace.setRaceName(raceName);
+    public Race updateRace(Long id, Race race) {
+        Race existingRace = raceRepository.findById(id).orElseThrow();
+        existingRace.setRace_name(existingRace.getRace_name());
         existingRace.setDescription(race.getDescription());
         existingRace.setLotrCharacterList(race.getLotrCharacterList());
         return raceRepository.save(existingRace);
@@ -51,7 +49,7 @@ public class RaceServiceImpl implements RaceService {
 //    }
 
     @Override
-    public void deleteRace(String raceName) {
-        raceRepository.delete(raceRepository.findRaceByRaceName(raceName).orElseThrow());
+    public void deleteRace(Long id) {
+        raceRepository.delete(raceRepository.findById(id).orElseThrow());
     }
 }

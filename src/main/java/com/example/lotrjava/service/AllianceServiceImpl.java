@@ -28,8 +28,8 @@ public class AllianceServiceImpl implements AllianceService {
     }
 
     @Override
-    public Alliance getAlliance(String allianceName) {
-        return allianceRepository.findByAllianceName(allianceName).orElseThrow();
+    public Alliance getAlliance(Long id) {
+        return allianceRepository.findById(id).orElseThrow();
     }
 
 //    @Override
@@ -44,14 +44,14 @@ public class AllianceServiceImpl implements AllianceService {
 //    }
 
     @Override
-    public Alliance updateAlliance(String allianceName, Alliance alliance) {
-        Alliance existingAlliance = allianceRepository.findByAllianceName(allianceName).orElseThrow();
-        existingAlliance.setAllianceName(alliance.getAllianceName());
+    public Alliance updateAlliance(Long id, Alliance alliance) {
+        Alliance existingAlliance = allianceRepository.findById(id).orElseThrow();
+        existingAlliance.setAlliance_name(alliance.getAlliance_name());
         return allianceRepository.save(existingAlliance);
     }
 
     @Override
-    public void deleteAlliance(String allianceName) {
-       allianceRepository.delete(allianceRepository.findByAllianceName(allianceName).orElseThrow());
+    public void deleteAlliance(Long id) {
+       allianceRepository.delete(allianceRepository.findById(id).orElseThrow());
     }
 }

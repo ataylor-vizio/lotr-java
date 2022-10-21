@@ -10,6 +10,4 @@ import java.util.Optional;
 
 @Repository
 public interface AllianceRepository extends CrudRepository<Alliance, Long> {
-
-    Optional<Alliance> findByAllianceName (String allianceName);
 }

@@ -1,11 +1,14 @@
 package com.example.lotrjava.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 
 @Getter
 @Setter
@@ -23,24 +26,26 @@ public class LotrCharacter implements Serializable {
 
     @NonNull
     @Column(name = "char_name", unique = true)
-    private String name;
+    private String char_name;
 
+    @JsonBackReference
     @NonNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "alliance", referencedColumnName = "alliance_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "alliance_id", referencedColumnName = "id")
     private Alliance alliance;
 
+    @JsonBackReference
     @NonNull
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "race", referencedColumnName = "race_name")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "race_id", referencedColumnName = "id")
     private Race race;
 //
 //    public LinkedHashMap<String, String> nestedCharacterRepr() {
 //        LinkedHashMap<String, String> characterInfo = new LinkedHashMap<>();
 //        characterInfo.put("id", id.toString());
-//        characterInfo.put("name", name);
-//        characterInfo.put("race", race.getRaceName());
-//        characterInfo.put("alliance", alliance.getAllianceName());
+//        characterInfo.put("name", char_name);
+//        characterInfo.put("race", race.getRace_name());
+//        characterInfo.put("alliance", alliance.getAlliance_name());
 //        return characterInfo;
 //    }
 }

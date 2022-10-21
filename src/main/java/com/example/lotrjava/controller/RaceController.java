@@ -36,19 +36,19 @@ public class RaceController {
     }
 
 
-    /** Finds and returns a single LOTR race by raceName (string)
+    /** Finds and returns a single LOTR race by race id (Long)
      *
-     * @param raceName path param of LOTR raceName
+     * @param id path param of LOTR race ID
      * @return the LOTR race found or throws an error
      */
     @Operation(summary = "Finds and returns single LOTR race by raceName, throws error if LOTR race not found.",
-            description = "raceName should be declared as a path variable.",
+            description = "race id should be declared as a path variable.",
             responses = {
                     @ApiResponse(content = @Content(mediaType= "application/json")),
             })
-    @GetMapping("/{raceName}")
-    public ResponseEntity<Race> getRace(@PathVariable String raceName) {
-        return new ResponseEntity<>(raceService.getRace(raceName), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Race> getRace(@PathVariable Long id) {
+        return new ResponseEntity<>(raceService.getRace(id), HttpStatus.OK);
     }
 
 
@@ -71,7 +71,7 @@ public class RaceController {
 
     /** Edits an existing LOTR character
      *
-     * @param raceName string
+     * @param id Long
      * @param race JSON body that corresponds to LOTR race schema
      * @return the LOTR race instance edited
      */
@@ -80,15 +80,15 @@ public class RaceController {
             responses = {
                     @ApiResponse(content = @Content(mediaType= "application/json")),
             })
-    @PutMapping("/{raceName}")
-    public ResponseEntity<Race> updateRace(@PathVariable String raceName, @RequestBody Race race) {
-        return new ResponseEntity<>(raceService.updateRace(raceName, race), HttpStatus.OK);
+    @PutMapping("/{id}")
+    public ResponseEntity<Race> updateRace(@PathVariable Long id, @RequestBody Race race) {
+        return new ResponseEntity<>(raceService.updateRace(id, race), HttpStatus.OK);
     }
 
 
     /** Deletes LOTR race if LOTR race with specified name is found
      *
-     * @param raceName name of the LOTR race to be deleted from db
+     * @param id ID of the LOTR race to be deleted from db
      * @return No Content
      */
     @Operation(summary = "Deletes a LOTR race if found, else throws an error",
@@ -97,9 +97,9 @@ public class RaceController {
                     @ApiResponse(responseCode = "204",
                             description = "No Content"),
             })
-    @DeleteMapping("/{raceName}")
-    public ResponseEntity<HttpStatus> deleteRace(@PathVariable String raceName) {
-        raceService.deleteRace(raceName);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteRace(@PathVariable Long id) {
+        raceService.deleteRace(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 

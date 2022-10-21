@@ -9,6 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface LotrCharacterRepository extends CrudRepository<LotrCharacter, Long> {
-    Optional<LotrCharacter> findLotrCharacterByName(String charName);
-
 }

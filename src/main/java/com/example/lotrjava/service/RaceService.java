@@ -13,8 +13,8 @@ public interface RaceService {
 
     Race createRace(Race race);
     List<Race> getRaces();
-    Race getRace(String race);
-    Race updateRace(String raceName, Race race);
+    Race getRace(Long id);
+    Race updateRace(Long id, Race race);
 //    List<LinkedHashMap<String, String>> getRaceMembers(String raceName);
-    void deleteRace(String raceName);
+    void deleteRace(Long id);
 }

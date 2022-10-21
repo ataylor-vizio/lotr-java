@@ -8,5 +8,4 @@ import java.util.Optional;
 
 @Repository
 public interface RaceRepository extends CrudRepository<Race, Long> {
-    Optional<Race> findRaceByRaceName(String raceName);
 }

@@ -25,12 +25,14 @@ public class Alliance implements Serializable {
 
     @NonNull
     @Column(name = "alliance_name", nullable = false, unique = true)
-    private String allianceName;
+    private String alliance_name;
 
-    @OneToMany(mappedBy = "alliance", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "alliance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacters;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "alliance_races",
             joinColumns = {@JoinColumn(name = "alliance_id")},
             inverseJoinColumns = {@JoinColumn(name = "race_id")})
@@ -39,7 +41,7 @@ public class Alliance implements Serializable {
     public LinkedHashMap<String, String> nestedAllianceRepr() {
         LinkedHashMap<String, String> allianceInfo = new LinkedHashMap<String, String>();
         allianceInfo.put("id", id.toString());
-        allianceInfo.put("name", allianceName);
+        allianceInfo.put("alliance_name", alliance_name);
         return allianceInfo;
     }
 }

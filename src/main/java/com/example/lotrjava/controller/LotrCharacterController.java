@@ -53,7 +53,7 @@ public class LotrCharacterController {
 
     /** Creates a new LOTR character
      *
-     * @param lotrCharacterRequest JSON body that corresponds to lotr character schema
+     * @param json Map<String, String> JSON body that corresponds to lotr character schema
      * @return the character instance created
      */
     @Operation(summary = "Creates lotr character",
@@ -63,9 +63,12 @@ public class LotrCharacterController {
             })
     @PostMapping
     @ResponseBody
-    public ResponseEntity<LotrCharacter> createLotrCharacter(@RequestBody LotrCharacter lotrCharacterRequest) {
+    public ResponseEntity<LotrCharacter> createLotrCharacter(@RequestBody Map<String, String> json) {
+        String char_name = json.get("char_name");
+        String alliance_id = json.get("alliance_id");
+        String race_id = json.get("race_id");
         try {
-            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(lotrCharacterRequest), HttpStatus.CREATED);
+            return new ResponseEntity<>(lotrCharacterService.createLotrCharacter(char_name, alliance_id, race_id), HttpStatus.CREATED);
         } catch (NoSuchElementException exc) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST, exc.getMessage());
