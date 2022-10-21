@@ -1,5 +1,6 @@
 package com.example.lotrjava.service;
 
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.entity.Race;
 import com.example.lotrjava.repository.RaceRepository;
 import lombok.AllArgsConstructor;
@@ -38,15 +39,11 @@ public class RaceServiceImpl implements RaceService {
         return raceRepository.save(existingRace);
     }
 
-//    @Override
-//    public List<LinkedHashMap<String, String>> getRaceMembers(String raceName) {
-//        List<LotrCharacter> raceCharacters = raceRepository.findRaceByRaceName(raceName).orElseThrow().getLotrCharacterList();
-//        List<LinkedHashMap<String, String>> raceMemberList = new ArrayList<>();
-//        for (LotrCharacter lotrCharacter : raceCharacters) {
-//            raceMemberList.add(lotrCharacter.nestedCharacterRepr());
-//        }
-//        return raceMemberList;
-//    }
+    @Override
+    public List<LotrCharacter> getRaceMembers(Long id) {
+        Race race = raceRepository.findById(id).orElseThrow();
+        return race.getLotrCharacterList();
+    }
 
     @Override
     public void deleteRace(Long id) {

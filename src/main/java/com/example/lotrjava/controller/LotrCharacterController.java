@@ -79,24 +79,27 @@ public class LotrCharacterController {
     /** Edits an existing LOTR character
      *
      * @param id Long
-     * @param lotrCharacterRequest JSON body that corresponds to lotr character schema
+     * @param json RequestBody JSON body that corresponds to lotr character schema
      * @return the character instance edited
      */
-//    @Operation(summary = "Edits existing lotr character if found, otherwise throws error",
-//            description = "JSON body should adhere to lotr character model scheme",
-//            responses = {
-//                    @ApiResponse(content = @Content(mediaType= "application/json")),
-//            })
-//    @PutMapping("/{id}")
-//    public ResponseEntity<LinkedHashMap<String, String>> updateLotrCharacter(@PathVariable Long id, @RequestBody HashMap<String, String> lotrCharacterRequest) {
-//        try {
-//            LotrCharacter updatedCharacter = lotrCharacterService.updateLotrCharacter(id, lotrCharacterRequest);
-//            return new ResponseEntity<>(updatedCharacter.nestedCharacterRepr(), HttpStatus.OK);
-//        } catch (NoSuchElementException exc) {
-//            throw new ResponseStatusException(
-//                    HttpStatus.NOT_FOUND, "requested character does not exist");
-//        }
-//    }
+    @Operation(summary = "Edits existing lotr character if found, otherwise throws error",
+            description = "JSON body should adhere to lotr character model scheme",
+            responses = {
+                    @ApiResponse(content = @Content(mediaType= "application/json")),
+            })
+    @PutMapping("/{id}")
+    public ResponseEntity<LotrCharacter> updateLotrCharacter(@PathVariable Long id, @RequestBody Map<String, String> json) {
+        System.out.println(id);
+        String char_name = json.get("char_name");
+        String alliance_id = json.get("alliance_id");
+        String race_id = json.get("race_id");
+        try {
+           return new ResponseEntity<>(lotrCharacterService.updateLotrCharacter(id, char_name, alliance_id, race_id), HttpStatus.OK);
+        } catch (NoSuchElementException exc) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "requested character does not exist");
+        }
+    }
 
     /** Deletes character if character with specified ID is found
      *

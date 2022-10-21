@@ -5,7 +5,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Getter
@@ -27,21 +26,20 @@ public class Alliance implements Serializable {
     @Column(name = "alliance_name", nullable = false, unique = true)
     private String alliance_name;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "alliance_characters")
     @OneToMany(mappedBy = "alliance", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacters;
 
-    @JsonManagedReference
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "alliance_races",
             joinColumns = {@JoinColumn(name = "alliance_id")},
             inverseJoinColumns = {@JoinColumn(name = "race_id")})
     private List<Race> races;
 
-    public LinkedHashMap<String, String> nestedAllianceRepr() {
-        LinkedHashMap<String, String> allianceInfo = new LinkedHashMap<String, String>();
-        allianceInfo.put("id", id.toString());
-        allianceInfo.put("alliance_name", alliance_name);
-        return allianceInfo;
-    }
+//    public LinkedHashMap<String, String> nestedAllianceRepr() {
+//        LinkedHashMap<String, String> allianceInfo = new LinkedHashMap<String, String>();
+//        allianceInfo.put("id", id.toString());
+//        allianceInfo.put("alliance_name", alliance_name);
+//        return allianceInfo;
+//    }
 }

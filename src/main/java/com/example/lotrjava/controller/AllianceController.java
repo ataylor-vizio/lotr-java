@@ -1,6 +1,7 @@
 package com.example.lotrjava.controller;
 
 import com.example.lotrjava.entity.Alliance;
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.service.AllianceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -11,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -102,16 +102,16 @@ public class AllianceController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-//    /** Retrieves all members of an alliance
-//     *
-//     * @param id name of alliance to which returned members belong to
-//     * @return allianceMembers
-//     */
-//    @Operation(summary = "Find all characters associated with the alliance",
-//            description = "Path variable of id should be provided.")
-//    @Parameter(name = "id")
-//    @GetMapping("/{id}/members")
-//    public ResponseEntity<List<LinkedHashMap<String, String>>> showAllianceMembers(@PathVariable Long id) {
-//        return new ResponseEntity<>(allianceService.getAllianceMembers(id), HttpStatus.OK);
-//    }
+    /** Retrieves all members of an alliance
+     *
+     * @param id name of alliance to which returned members belong to
+     * @return allianceMembers
+     */
+    @Operation(summary = "Find all characters associated with the alliance",
+            description = "Path variable of id should be provided.")
+    @Parameter(name = "id")
+    @GetMapping("/{id}/members")
+    public ResponseEntity<List<LotrCharacter>> showAllianceMembers(@PathVariable Long id) {
+        return new ResponseEntity<>(allianceService.getAllianceMembers(id), HttpStatus.OK);
+    }
 }

@@ -7,8 +7,6 @@ import com.example.lotrjava.repository.AllianceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @AllArgsConstructor
@@ -32,16 +30,11 @@ public class AllianceServiceImpl implements AllianceService {
         return allianceRepository.findById(id).orElseThrow();
     }
 
-//    @Override
-//    public List<LinkedHashMap<String, String>> getAllianceMembers(String allianceName) {
-//        List<LotrCharacter> members = allianceRepository.findByAllianceName(allianceName).orElseThrow().getLotrCharacters();
-//        List<LinkedHashMap<String, String>> allianceMemberInfo = new ArrayList<>();
-//        for (LotrCharacter lotrCharacter : members)
-//        {
-//            allianceMemberInfo.add(lotrCharacter.nestedCharacterRepr());
-//        }
-//        return allianceMemberInfo;
-//    }
+    @Override
+    public List<LotrCharacter> getAllianceMembers(Long id) {
+        List<LotrCharacter> members = allianceRepository.findById(id).orElseThrow().getLotrCharacters();
+        return members;
+    }
 
     @Override
     public Alliance updateAlliance(Long id, Alliance alliance) {

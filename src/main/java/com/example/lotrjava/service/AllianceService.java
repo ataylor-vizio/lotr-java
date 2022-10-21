@@ -1,9 +1,9 @@
 package com.example.lotrjava.service;
 
 import com.example.lotrjava.entity.Alliance;
+import com.example.lotrjava.entity.LotrCharacter;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 @Service
@@ -13,6 +13,6 @@ public interface AllianceService {
     List<Alliance> getAlliances();
     Alliance getAlliance(Long id);
     Alliance updateAlliance(Long id, Alliance alliance);
-//    List<LinkedHashMap<String, String>> getAllianceMembers(Long id);
+    List<LotrCharacter> getAllianceMembers(Long id);
     void deleteAlliance(Long id);
 }

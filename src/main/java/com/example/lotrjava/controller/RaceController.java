@@ -1,5 +1,6 @@
 package com.example.lotrjava.controller;
 
+import com.example.lotrjava.entity.LotrCharacter;
 import com.example.lotrjava.entity.Race;
 
 import com.example.lotrjava.service.RaceService;
@@ -104,16 +105,16 @@ public class RaceController {
     }
 
 
-//    /** Retrieves all members of an alliance
-//     *
-//     * @param raceName name of LOTR race that returned members belong to
-//     * @return raceMembers
-//     */
-//    @Operation(summary = "Find all characters associated with the LOTR race",
-//            description = "Path variable of raceName should be provided.")
-//    @Parameter(name = "allianceName")
-//    @GetMapping("/{raceName}/members")
-//    public ResponseEntity<List<LinkedHashMap<String, String>>> showRaceMembers(@PathVariable String raceName) {
-//        return new ResponseEntity<>(raceService.getRaceMembers(raceName), HttpStatus.OK);
-//    }
+    /** Retrieves all members of an alliance
+     *
+     * @param id ID of LOTR race that returned members belong to
+     * @return raceMembers
+     */
+    @Operation(summary = "Find all characters associated with the LOTR race",
+            description = "Path variable of raceName should be provided.")
+    @Parameter(name = "id")
+    @GetMapping("/{id}/members")
+    public ResponseEntity<List<LotrCharacter>> showRaceMembers(@PathVariable Long id) {
+        return new ResponseEntity<>(raceService.getRaceMembers(id), HttpStatus.OK);
+    }
 }

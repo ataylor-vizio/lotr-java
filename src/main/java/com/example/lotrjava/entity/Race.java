@@ -1,7 +1,5 @@
 package com.example.lotrjava.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
@@ -34,9 +32,12 @@ public class Race implements Serializable {
     @Column(name = "description", columnDefinition = "VARCHAR(800)", nullable = false)
     private String description;
 
-    @JsonManagedReference
+    @JsonManagedReference(value = "race_characters")
     @OneToMany(mappedBy = "race", cascade = CascadeType.ALL)
     private List<LotrCharacter> lotrCharacterList;
+
+    @ManyToMany(mappedBy = "races")
+    private List<Alliance> alliances;
 
     public LinkedHashMap<String, String> nestedRaceRepr() {
         LinkedHashMap<String, String> raceInfo = new LinkedHashMap<String, String>();
